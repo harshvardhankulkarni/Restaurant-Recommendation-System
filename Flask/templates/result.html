@@ -1,0 +1,405 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Results - SpotMyMeal</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #eef2f7;
+        --surface: #eef2f7;
+        --text: #1e293b;
+        --muted: #64748b;
+        --primary: #6366f1;
+        --primary-2: #3b82f6;
+        --shadow-raised:
+          8px 8px 16px rgba(148, 163, 184, 0.35),
+          -8px -8px 16px rgba(255, 255, 255, 0.88);
+        --shadow-raised-lg:
+          12px 12px 24px rgba(148, 163, 184, 0.34),
+          -12px -12px 24px rgba(255, 255, 255, 0.9);
+        --shadow-pressed:
+          inset 6px 6px 12px rgba(148, 163, 184, 0.28),
+          inset -6px -6px 12px rgba(255, 255, 255, 0.88);
+        --accent-grad: linear-gradient(135deg, var(--primary), var(--primary-2));
+      }
+
+      body {
+        font-family: "Poppins", system-ui, -apple-system, sans-serif;
+        background: radial-gradient(circle at 12% 10%, #f7f9fc, #eef2f7 46%, #e9eff7);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 60px;
+        background: var(--surface);
+        box-shadow: var(--shadow-raised);
+        border-radius: 0 0 20px 20px;
+      }
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text);
+        text-decoration: none;
+      }
+      .nav-brand i {
+        color: var(--primary);
+      }
+      .nav-links {
+        display: flex;
+        gap: 22px;
+        align-items: center;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--muted);
+        font-weight: 500;
+        font-size: 14px;
+        transition: color 0.25s ease;
+      }
+      .nav-links a:hover {
+        color: var(--text);
+      }
+      .nav-cta {
+        background: var(--accent-grad) !important;
+        color: #ffffff !important;
+        padding: 8px 18px;
+        border-radius: 999px;
+        font-weight: 600 !important;
+        font-size: 13px !important;
+        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.28);
+        transition: transform 0.24s ease, box-shadow 0.24s ease;
+      }
+      .nav-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 13px 24px rgba(99, 102, 241, 0.34);
+      }
+
+      .results-header {
+        padding: 44px 60px 0;
+      }
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 22px;
+        transition: color 0.25s ease;
+      }
+      .back-link:hover {
+        color: var(--text);
+      }
+
+      .result-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-bottom: 34px;
+      }
+      .result-meta h1 {
+        font-size: 27px;
+        font-weight: 700;
+      }
+      .result-meta h1 span {
+        background: var(--accent-grad);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .result-count {
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 600;
+        padding: 9px 16px;
+        border-radius: 999px;
+        background: var(--surface);
+        box-shadow: var(--shadow-pressed);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 22px;
+        padding: 0 60px 56px;
+      }
+
+      .card {
+        background: var(--surface);
+        border-radius: 18px;
+        box-shadow: var(--shadow-raised);
+        padding: 24px 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+        transition: transform 0.28s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--accent-grad);
+      }
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      .card-rank {
+        position: absolute;
+        top: 14px;
+        right: 16px;
+        width: 30px;
+        height: 30px;
+        color: var(--text);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 700;
+        background: var(--surface);
+        box-shadow: var(--shadow-pressed);
+      }
+
+      .card-name {
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--text);
+        padding-right: 36px;
+        line-height: 1.35;
+      }
+
+      .card-cuisine {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: var(--muted);
+        background: var(--surface);
+        padding: 7px 11px;
+        border-radius: 10px;
+        box-shadow: var(--shadow-pressed);
+      }
+      .card-cuisine i {
+        color: var(--primary);
+        font-size: 12px;
+      }
+
+      .card-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-top: 4px;
+      }
+
+      .rating-badge {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--text);
+        font-size: 14px;
+        font-weight: 700;
+        padding: 7px 12px;
+        border-radius: 10px;
+        flex: 1;
+        background: var(--surface);
+        box-shadow: var(--shadow-pressed);
+      }
+      .rating-badge i {
+        font-size: 12px;
+        color: var(--primary);
+      }
+
+      .budget-badge {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--text);
+        font-size: 14px;
+        font-weight: 600;
+        padding: 7px 12px;
+        border-radius: 10px;
+        flex: 1;
+        background: var(--surface);
+        box-shadow: var(--shadow-pressed);
+      }
+      .budget-badge span {
+        color: var(--muted);
+        font-weight: 500;
+        font-size: 12px;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 78px 30px;
+      }
+      .empty-state-inner {
+        max-width: 520px;
+        margin: 0 auto;
+        background: var(--surface);
+        border-radius: 24px;
+        box-shadow: var(--shadow-raised-lg);
+        padding: 42px 30px;
+      }
+      .empty-icon {
+        font-size: 50px;
+        margin-bottom: 18px;
+        color: var(--primary);
+      }
+      .empty-state h2 {
+        font-size: 22px;
+        margin-bottom: 10px;
+      }
+      .empty-state p {
+        color: var(--muted);
+        font-size: 15px;
+        margin-bottom: 24px;
+      }
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--accent-grad);
+        color: #ffffff;
+        padding: 12px 24px;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.28);
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 13px 24px rgba(99, 102, 241, 0.34);
+      }
+
+      footer {
+        text-align: center;
+        padding: 22px;
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: auto;
+      }
+
+      @media (max-width: 768px) {
+        nav {
+          padding: 16px 20px;
+        }
+        .results-header {
+          padding: 30px 20px 0;
+        }
+        .grid {
+          padding: 0 20px 44px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="nav-brand" href="/"
+        ><i class="fa-solid fa-utensils"></i> SpotMyMeal</a
+      >
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/recommend" class="nav-cta"
+          ><i class="fa-solid fa-magnifying-glass"></i> New Search</a
+        >
+      </div>
+    </nav>
+
+    <div class="results-header">
+      <a href="/recommend" class="back-link"
+        ><i class="fa-solid fa-arrow-left"></i> Back to Search</a
+      >
+      <div class="result-meta">
+        {% if search_name %}
+        <h1>Restaurants similar to <span>{{ search_name }}</span></h1>
+        {% else %}
+        <h1>Recommended <span>Restaurants</span></h1>
+        {% endif %}
+        <span class="result-count"
+          ><i class="fa-solid fa-list"></i> {{ recommended_restaurants|length }}
+          result{{ 's' if recommended_restaurants|length != 1 }}</span
+        >
+      </div>
+    </div>
+
+    {% if recommended_restaurants %}
+    <div class="grid">
+      {% for r in recommended_restaurants %}
+      <div class="card">
+        <div class="card-rank">{{ loop.index }}</div>
+        <div class="card-name">{{ r.name }}</div>
+        <div class="card-cuisine">
+          <i class="fa-solid fa-bowl-food"></i> {{ r.cuisines | title }}
+        </div>
+        <div class="card-row">
+          <div class="rating-badge">
+            <i class="fa-solid fa-star"></i>
+            {{ "%.1f" | format(r['Mean Rating']) }}
+          </div>
+          <div class="budget-badge">
+            &#8377;{{ "%.0f" | format(r.cost) }} <span>/ person</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <div class="empty-state-inner">
+        <div class="empty-icon"><i class="fa-solid fa-plate-utensils"></i></div>
+        <h2>No Results Found</h2>
+        <p>
+          Try adjusting your filters or searching with a different restaurant
+          name.
+        </p>
+        <a href="/recommend" class="btn-primary"
+          ><i class="fa-solid fa-arrow-left"></i> Try Again</a
+        >
+      </div>
+    </div>
+    {% endif %}
+
+    <footer>
+      © 2026 SpotMyMeal &nbsp;·&nbsp; Developed by ·&nbsp; Vishwajeet sawant  
+    </footer>
+  </body>
+</html>

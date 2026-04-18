@@ -1,0 +1,457 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SpotMyMeal - Smart Restaurant Recommendations</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #eef2f7;
+        --bg-soft: #f1f5f9;
+        --surface: #eef2f7;
+        --text: #1e293b;
+        --muted: #64748b;
+        --primary: #6366f1;
+        --primary-2: #3b82f6;
+        --radius: 22px;
+        --shadow-raised:
+          8px 8px 16px rgba(148, 163, 184, 0.35),
+          -8px -8px 16px rgba(255, 255, 255, 0.88);
+        --shadow-raised-lg:
+          12px 12px 24px rgba(148, 163, 184, 0.34),
+          -12px -12px 24px rgba(255, 255, 255, 0.9);
+        --shadow-pressed:
+          inset 6px 6px 12px rgba(148, 163, 184, 0.28),
+          inset -6px -6px 12px rgba(255, 255, 255, 0.88);
+        --accent-grad: linear-gradient(135deg, var(--primary), var(--primary-2));
+      }
+
+      body {
+        font-family: "Poppins", system-ui, -apple-system, sans-serif;
+        background: radial-gradient(circle at 12% 10%, #f7f9fc, #eef2f7 46%, #e9eff7);
+        color: var(--text);
+        min-height: 100vh;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 60px;
+        border-radius: 0 0 20px 20px;
+        background: var(--surface);
+        box-shadow: var(--shadow-raised);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text);
+        text-decoration: none;
+      }
+      .nav-brand i {
+        color: var(--primary);
+      }
+      .nav-links {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--muted);
+        font-weight: 500;
+        font-size: 14px;
+        transition: color 0.25s ease;
+      }
+      .nav-links a:hover {
+        color: var(--text);
+      }
+      .nav-cta {
+        color: #ffffff !important;
+        background: var(--accent-grad);
+        padding: 9px 20px;
+        border-radius: 999px;
+        font-weight: 600 !important;
+        box-shadow: 0 8px 18px rgba(99, 102, 241, 0.32);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+      .nav-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 20px rgba(99, 102, 241, 0.35);
+      }
+
+      .hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 88px 24px 56px;
+      }
+      .hero-panel {
+        width: min(760px, 100%);
+        background: var(--surface);
+        border-radius: 28px;
+        padding: 42px 28px;
+        box-shadow: var(--shadow-raised-lg);
+      }
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--surface);
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 999px;
+        box-shadow: var(--shadow-pressed);
+        margin-bottom: 24px;
+      }
+      .hero h1 {
+        font-size: clamp(34px, 5vw, 58px);
+        font-weight: 700;
+        line-height: 1.12;
+        margin-bottom: 18px;
+      }
+      .hero h1 span {
+        background: var(--accent-grad);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .hero p {
+        font-size: 16px;
+        color: var(--muted);
+        max-width: 560px;
+        line-height: 1.7;
+        margin: 0 auto 34px;
+      }
+      .hero-btns {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .btn-primary {
+        background: var(--accent-grad);
+        color: #ffffff;
+        padding: 13px 30px;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.28);
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 13px 24px rgba(99, 102, 241, 0.34);
+      }
+      .btn-primary:active {
+        transform: translateY(0);
+      }
+      .btn-outline {
+        color: var(--text);
+        padding: 12px 26px;
+        border-radius: 999px;
+        font-weight: 500;
+        font-size: 14px;
+        text-decoration: none;
+        background: var(--surface);
+        box-shadow: var(--shadow-raised);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+      .btn-outline:hover {
+        transform: translateY(-2px);
+      }
+      .btn-outline:active {
+        box-shadow: var(--shadow-pressed);
+      }
+
+      .stats-row {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        padding: 18px 24px 56px;
+        flex-wrap: wrap;
+      }
+      .stat {
+        min-width: 170px;
+        text-align: center;
+        background: var(--surface);
+        border-radius: 18px;
+        padding: 16px 20px;
+        box-shadow: var(--shadow-raised);
+        transition: transform 0.25s ease;
+      }
+      .stat:hover {
+        transform: translateY(-2px);
+      }
+      .stat-num {
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--primary);
+      }
+      .stat-label {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 3px;
+      }
+
+      .section {
+        padding: 30px 24px 20px;
+      }
+      .section-title {
+        text-align: center;
+        font-size: 30px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .section-sub {
+        text-align: center;
+        color: var(--muted);
+        font-size: 14px;
+        margin-bottom: 42px;
+      }
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 22px;
+        max-width: 1040px;
+        margin: 0 auto;
+      }
+      .feature-card {
+        background: var(--surface);
+        padding: 30px 24px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-raised);
+        transition: transform 0.25s ease;
+      }
+      .feature-card:hover {
+        transform: translateY(-5px);
+      }
+      .feature-icon {
+        width: 54px;
+        height: 54px;
+        background: var(--surface);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+        font-size: 21px;
+        box-shadow: var(--shadow-pressed);
+      }
+      .feature-icon i {
+        color: var(--primary);
+      }
+      .feature-card h3 {
+        font-size: 17px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+      .feature-card p {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .cta-strip {
+        max-width: 1040px;
+        margin: 26px auto 60px;
+        background: var(--surface);
+        border-radius: 24px;
+        padding: 46px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 28px;
+        flex-wrap: wrap;
+        box-shadow: var(--shadow-raised-lg);
+      }
+      .cta-strip h2 {
+        font-size: 28px;
+        color: var(--text);
+        font-weight: 700;
+      }
+      .cta-strip p {
+        color: var(--muted);
+        margin-top: 6px;
+        font-size: 14px;
+      }
+      .btn-white {
+        background: var(--surface);
+        color: var(--text);
+        padding: 13px 26px;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        box-shadow: var(--shadow-raised);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+      .btn-white:hover {
+        transform: translateY(-2px);
+      }
+      .btn-white:active {
+        box-shadow: var(--shadow-pressed);
+      }
+
+      footer {
+        text-align: center;
+        padding: 24px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      @media (max-width: 768px) {
+        nav {
+          padding: 16px 20px;
+        }
+        .nav-links {
+          gap: 16px;
+        }
+        .hero {
+          padding-top: 72px;
+        }
+        .hero-panel {
+          padding: 34px 20px;
+        }
+        .cta-strip {
+          margin: 22px 20px 40px;
+          padding: 34px 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="nav-brand" href="/"
+        ><i class="fa-solid fa-utensils"></i> SpotMyMeal</a
+      >
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/recommend">Explore</a>
+        <a href="/recommend" class="nav-cta">Get Started</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-panel">
+        <div class="hero-badge">
+          <i class="fa-solid fa-sparkles"></i> AI-Powered Restaurant
+          Recommendations
+        </div>
+        <h1>Find Your Next <span>Favourite</span> Restaurant</h1>
+        <p>
+          Enter any restaurant you love and we'll find similar places filtered by
+          cuisine, budget, and rating - instantly.
+        </p>
+        <div class="hero-btns">
+          <a href="/recommend" class="btn-primary"
+            ><i class="fa-solid fa-magnifying-glass"></i> Start Exploring</a
+          >
+          <a href="#features" class="btn-outline">See How It Works</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-num">7,000+</div>
+        <div class="stat-label">Restaurants</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Cuisine Types</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">AI</div>
+        <div class="stat-label">Powered Matching</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">Free</div>
+        <div class="stat-label">No Sign-up Needed</div>
+      </div>
+    </div>
+
+    <section class="section" id="features">
+      <div class="section-title">Why Use SavoryScout?</div>
+      <div class="section-sub">Smart filters, smart results - every time.</div>
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-brain"></i></div>
+          <h3>Smart Similarity Engine</h3>
+          <p>
+            Uses TF-IDF and cosine similarity to find restaurants with matching
+            cuisine profiles.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-filter"></i></div>
+          <h3>Flexible Filters</h3>
+          <p>
+            Filter results by cuisine type, maximum budget, and minimum rating
+            in one go.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-star"></i></div>
+          <h3>Rating-Sorted Results</h3>
+          <p>
+            The highest-rated matches appear first so you always see the best
+            options on top.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
+          <h3>Instant Results</h3>
+          <p>
+            No accounts, no waiting. Just type a name and get personalised
+            recommendations.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="cta-strip">
+      <div>
+        <h2>Ready to discover great food?</h2>
+        <p>Find restaurants similar to ones you already love.</p>
+      </div>
+      <a href="/recommend" class="btn-white"
+        ><i class="fa-solid fa-arrow-right"></i> &nbsp;Try It Now</a
+      >
+    </div>
+
+    <footer>
+      © 2026 SpotMyMeal &nbsp;·&nbsp; Developed By ·&nbsp; Vishwajeet sawant  
+    </footer>
+  </body>
+</html>

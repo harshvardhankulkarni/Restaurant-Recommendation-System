@@ -1,0 +1,305 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>No Results Found - SpotMyMeal</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #eef2f7;
+        --surface: #eef2f7;
+        --text: #1e293b;
+        --muted: #64748b;
+        --primary: #6366f1;
+        --primary-2: #3b82f6;
+        --shadow-raised:
+          8px 8px 16px rgba(148, 163, 184, 0.35),
+          -8px -8px 16px rgba(255, 255, 255, 0.88);
+        --shadow-raised-lg:
+          12px 12px 24px rgba(148, 163, 184, 0.34),
+          -12px -12px 24px rgba(255, 255, 255, 0.9);
+        --shadow-pressed:
+          inset 6px 6px 12px rgba(148, 163, 184, 0.28),
+          inset -6px -6px 12px rgba(255, 255, 255, 0.88);
+        --accent-grad: linear-gradient(135deg, var(--primary), var(--primary-2));
+      }
+
+      body {
+        font-family: "Poppins", system-ui, -apple-system, sans-serif;
+        background: radial-gradient(circle at 12% 10%, #f7f9fc, #eef2f7 46%, #e9eff7);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 60px;
+        background: var(--surface);
+        box-shadow: var(--shadow-raised);
+        border-radius: 0 0 20px 20px;
+      }
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text);
+        text-decoration: none;
+      }
+      .nav-brand i {
+        color: var(--primary);
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--muted);
+        font-weight: 500;
+        font-size: 14px;
+        margin-left: 28px;
+        transition: color 0.24s ease;
+      }
+      .nav-links a:hover {
+        color: var(--text);
+      }
+
+      .page-body {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 54px 24px;
+      }
+
+      .error-card {
+        background: var(--surface);
+        border-radius: 24px;
+        box-shadow: var(--shadow-raised-lg);
+        padding: 54px 46px;
+        max-width: 560px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .error-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--accent-grad);
+      }
+
+      .error-icon {
+        width: 78px;
+        height: 78px;
+        background: var(--surface);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 24px;
+        box-shadow: var(--shadow-pressed);
+      }
+      .error-icon i {
+        font-size: 31px;
+        color: var(--primary);
+      }
+
+      .error-card h1 {
+        font-size: 26px;
+        font-weight: 700;
+        margin-bottom: 14px;
+      }
+
+      .error-message {
+        font-size: 15px;
+        color: var(--muted);
+        line-height: 1.7;
+        margin-bottom: 32px;
+        background: var(--surface);
+        padding: 14px 16px;
+        border-radius: 12px;
+        box-shadow: var(--shadow-pressed);
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--accent-grad);
+        color: #ffffff;
+        padding: 12px 24px;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.28);
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 13px 24px rgba(99, 102, 241, 0.34);
+      }
+      .btn-primary:active {
+        transform: translateY(0);
+      }
+
+      .btn-outline {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--text);
+        padding: 11px 22px;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        background: var(--surface);
+        box-shadow: var(--shadow-raised);
+        transition: transform 0.24s ease, box-shadow 0.24s ease;
+      }
+      .btn-outline:hover {
+        transform: translateY(-2px);
+      }
+      .btn-outline:active {
+        box-shadow: var(--shadow-pressed);
+      }
+
+      .tips {
+        margin-top: 32px;
+        border-top: 1px solid rgba(148, 163, 184, 0.35);
+        padding-top: 24px;
+        text-align: left;
+      }
+      .tips h3 {
+        font-size: 12px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        font-weight: 600;
+        margin-bottom: 12px;
+      }
+      .tips ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .tips li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+      .tips li i {
+        color: var(--primary);
+        margin-top: 2px;
+        flex-shrink: 0;
+      }
+
+      footer {
+        text-align: center;
+        padding: 22px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      @media (max-width: 700px) {
+        nav {
+          padding: 16px 20px;
+        }
+        .error-card {
+          padding: 42px 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="nav-brand" href="/"
+        ><i class="fa-solid fa-utensils"></i> SpotMyMeal</a
+      >
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/recommend">Search</a>
+      </div>
+    </nav>
+
+    <div class="page-body">
+      <div class="error-card">
+        <div class="error-icon">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+
+        <h1>No Results Found</h1>
+
+        <div class="error-message">{{ message }}</div>
+
+        <div class="btn-group">
+          <a href="/recommend" class="btn-primary"
+            ><i class="fa-solid fa-rotate-left"></i> Try Again</a
+          >
+          <a href="/" class="btn-outline"
+            ><i class="fa-solid fa-house"></i> Home</a
+          >
+        </div>
+
+        <div class="tips">
+          <h3>Helpful Tips</h3>
+          <ul>
+            <li>
+              <i class="fa-solid fa-circle-info"></i> Double-check the
+              restaurant name spelling
+            </li>
+            <li>
+              <i class="fa-solid fa-circle-info"></i> Try selecting "Any
+              Cuisine" and "Any Budget" to broaden results
+            </li>
+            <li>
+              <i class="fa-solid fa-circle-info"></i> Partial names may not
+              match - use the full restaurant name
+            </li>
+            <li>
+              <i class="fa-solid fa-circle-info"></i> Lower the minimum rating
+              to see more options
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      © 2026 SpotMyMeal &nbsp;·&nbsp; Developed by ·&nbsp; Vishwajeet sawant    </footer>
+  </body>
+</html>

@@ -1,0 +1,411 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Find Restaurants - SpotMyMeal</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #eef2f7;
+        --surface: #eef2f7;
+        --text: #1e293b;
+        --muted: #64748b;
+        --primary: #6366f1;
+        --primary-2: #3b82f6;
+        --radius: 22px;
+        --shadow-raised:
+          8px 8px 16px rgba(148, 163, 184, 0.35),
+          -8px -8px 16px rgba(255, 255, 255, 0.88);
+        --shadow-raised-lg:
+          12px 12px 24px rgba(148, 163, 184, 0.34),
+          -12px -12px 24px rgba(255, 255, 255, 0.9);
+        --shadow-pressed:
+          inset 6px 6px 12px rgba(148, 163, 184, 0.28),
+          inset -6px -6px 12px rgba(255, 255, 255, 0.88);
+        --accent-grad: linear-gradient(135deg, var(--primary), var(--primary-2));
+      }
+
+      body {
+        font-family: "Poppins", system-ui, -apple-system, sans-serif;
+        background: radial-gradient(circle at 12% 10%, #f7f9fc, #eef2f7 46%, #e9eff7);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 60px;
+        background: var(--surface);
+        box-shadow: var(--shadow-raised);
+        border-radius: 0 0 20px 20px;
+      }
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text);
+        text-decoration: none;
+      }
+      .nav-brand i {
+        color: var(--primary);
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--muted);
+        font-weight: 500;
+        font-size: 14px;
+        margin-left: 28px;
+        transition: color 0.25s ease;
+      }
+      .nav-links a:hover {
+        color: var(--text);
+      }
+
+      main {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 54px 24px;
+      }
+
+      .form-wrapper {
+        display: flex;
+        gap: 40px;
+        max-width: 1060px;
+        width: 100%;
+        align-items: flex-start;
+      }
+
+      .form-info {
+        flex: 1;
+        background: var(--surface);
+        border-radius: 24px;
+        padding: 32px;
+        box-shadow: var(--shadow-raised);
+      }
+      .form-info h1 {
+        font-size: 34px;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 14px;
+      }
+      .form-info h1 span {
+        background: var(--accent-grad);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .form-info p {
+        font-size: 15px;
+        color: var(--muted);
+        line-height: 1.7;
+        margin-bottom: 28px;
+      }
+      .tip-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .tip-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 11px;
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+      .tip-list li i {
+        color: var(--primary);
+        margin-top: 3px;
+        flex-shrink: 0;
+      }
+
+      .form-card {
+        background: var(--surface);
+        border-radius: 24px;
+        box-shadow: var(--shadow-raised-lg);
+        padding: 38px 34px;
+        width: 430px;
+        flex-shrink: 0;
+      }
+      .form-card h2 {
+        font-size: 21px;
+        font-weight: 700;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .form-card h2 i {
+        color: var(--primary);
+      }
+
+      .field {
+        margin-bottom: 18px;
+      }
+      .field label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--muted);
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.55px;
+      }
+      .input-wrap {
+        position: relative;
+      }
+      .input-wrap i {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #64748b;
+        font-size: 14px;
+        pointer-events: none;
+      }
+      .input-wrap input,
+      .input-wrap select {
+        width: 100%;
+        padding: 12px 14px 12px 40px;
+        border: none;
+        border-radius: 12px;
+        font-family: "Poppins", system-ui, sans-serif;
+        font-size: 14px;
+        color: var(--text);
+        background: var(--surface);
+        outline: none;
+        box-shadow: var(--shadow-pressed);
+        transition: box-shadow 0.24s ease, transform 0.24s ease;
+        appearance: none;
+      }
+      .input-wrap input:focus,
+      .input-wrap select:focus {
+        box-shadow:
+          inset 5px 5px 10px rgba(148, 163, 184, 0.27),
+          inset -5px -5px 10px rgba(255, 255, 255, 0.9),
+          0 0 0 2px rgba(99, 102, 241, 0.2);
+      }
+      .input-wrap input::placeholder {
+        color: #94a3b8;
+      }
+
+      .divider {
+        height: 1px;
+        background: rgba(148, 163, 184, 0.35);
+        margin: 24px 0;
+      }
+
+      .btn-submit {
+        width: 100%;
+        padding: 13px;
+        background: var(--accent-grad);
+        color: #ffffff;
+        border: none;
+        border-radius: 999px;
+        font-family: "Poppins", system-ui, sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.28);
+      }
+      .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 13px 24px rgba(99, 102, 241, 0.34);
+      }
+      .btn-submit:active {
+        transform: translateY(0);
+        box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
+      }
+
+      footer {
+        text-align: center;
+        padding: 22px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      @media (max-width: 920px) {
+        .form-wrapper {
+          flex-direction: column;
+          align-items: center;
+          gap: 22px;
+        }
+        .form-info {
+          width: 100%;
+          max-width: 620px;
+        }
+        .form-card {
+          width: 100%;
+          max-width: 520px;
+        }
+      }
+
+      @media (max-width: 700px) {
+        nav {
+          padding: 16px 20px;
+        }
+        .form-info {
+          display: none;
+        }
+        main {
+          padding: 34px 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="nav-brand" href="/"
+        ><i class="fa-solid fa-utensils"></i> SpotMyMeal</a
+      >
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/recommend">Explore</a>
+      </div>
+    </nav>
+
+    <main>
+      <div class="form-wrapper">
+        <!-- Info Panel -->
+        <div class="form-info">
+          <h1>Discover <span>Similar</span><br />Restaurants</h1>
+          <p>
+            Enter the name of a restaurant you enjoy and we'll find the best
+            similar options tailored to your preferences.
+          </p>
+          <ul class="tip-list">
+            <li>
+              <i class="fa-solid fa-circle-check"></i> Use the exact restaurant
+              name from our database
+            </li>
+            <li>
+              <i class="fa-solid fa-circle-check"></i> Set your cuisine
+              preference for targeted results
+            </li>
+            <li>
+              <i class="fa-solid fa-circle-check"></i> Budget and rating filters
+              help narrow down choices
+            </li>
+            <li>
+              <i class="fa-solid fa-circle-check"></i> Results are ranked by
+              rating - best first
+            </li>
+          </ul>
+        </div>
+
+        <!-- Form Card -->
+        <div class="form-card">
+          <h2>
+            <i class="fa-solid fa-magnifying-glass"></i> Search Restaurants
+          </h2>
+
+          <form action="/result" method="post">
+            <div class="field">
+              <label>Restaurant Name</label>
+              <div class="input-wrap">
+                <i class="fa-solid fa-store"></i>
+                <input
+                  type="text"
+                  name="restaurant_name"
+                  placeholder="e.g. Jalsa, Spice Elephant..."
+                  required
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Cuisine Type</label>
+              <div class="input-wrap">
+                <i class="fa-solid fa-bowl-food"></i>
+                <select name="cuisine">
+                  <option value="">Any Cuisine</option>
+                  <option value="north indian">North Indian</option>
+                  <option value="south indian">South Indian</option>
+                  <option value="chinese">Chinese</option>
+                  <option value="mughlai">Mughlai</option>
+                  <option value="italian">Italian</option>
+                  <option value="continental">Continental</option>
+                  <option value="fast food">Fast Food</option>
+                  <option value="biryani">Biryani</option>
+                  <option value="thai">Thai</option>
+                  <option value="seafood">Seafood</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Maximum Budget (&#8377; per person)</label>
+              <div class="input-wrap">
+                <i class="fa-solid fa-indian-rupee-sign"></i>
+                <select name="budget">
+                  <option value="9999999">Any Budget</option>
+                  <option value="300">Up to &#8377;300</option>
+                  <option value="500">Up to &#8377;500</option>
+                  <option value="800">Up to &#8377;800</option>
+                  <option value="1000">Up to &#8377;1,000</option>
+                  <option value="1500">Up to &#8377;1,500</option>
+                  <option value="2000">Up to &#8377;2,000</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Minimum Rating</label>
+              <div class="input-wrap">
+                <i class="fa-solid fa-star"></i>
+                <select name="rating">
+                  <option value="0">Any Rating</option>
+                  <option value="3">3.0 and above</option>
+                  <option value="3.5">3.5 and above</option>
+                  <option value="4">4.0 and above</option>
+                  <option value="4.5">4.5 and above</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <button type="submit" class="btn-submit">
+              <i class="fa-solid fa-sparkles"></i> Get Recommendations
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      © 2026 SpotMyMeal &nbsp;·&nbsp; Developed by ·&nbsp; Vishwajeet sawant  
+    </footer>
+  </body>
+</html>
