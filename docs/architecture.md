@@ -1,61 +1,98 @@
-# Architecture: SpotMyMeal Restaurant Recommendation System
+<!-- GSD -->
+
+# Restaurant Recommendation System (SpotMyMeal) — Architecture
 
 ## Context and Goals
 
-SpotMyMeal is a demo content-based restaurant recommendation engine. A user enters a restaurant name they like, and the system finds similar restaurants using cuisine text similarity. Optional filters narrow results by cuisine type, budget, and minimum rating.
+Content-based restaurant recommendation engine using TF-IDF vectorization and cosine similarity. Flask web application serving 3,225 restaurants from a CSV dataset. Portfolio demo showcasing recommendation systems with web deployment.
 
-Goals:
-- Serve recommendations in under 2 seconds
-- Work with no user accounts or persistent state
-- Run on a single machine with no external services
+## Architecture
+
+Flask MVC web application with in-memory recommendation engine. No database — data loaded from CSV on startup. TF-IDF similarity matrix recomputed per request.
 
 ## Data Flow
 
 ```
-User Browser                     Flask Server                    Dataset
-     |                               |                              |
-     |-- GET / -> index.html ------->|                              |
-     |<-- HTML page -----------------|                              |
-     |                               |                              |
-     |-- GET /recommend ------------>|                              |
-     |<-- recommend.html ------------|                              |
-     |                               |                              |
-     |-- POST /result ---------------|                              |
-     |   restaurant_name             |--- Load CSV (startup) ------>|
-     |   cuisine                     |                              |
-     |   budget                      |--- TF-IDF on cuisines ------>|
-     |   rating                      |--- cosine_similarity ------->|
-     |                               |                              |
-     |<-- result.html (top 10) ------|                              |
+CSV Dataset (3,225 restaurants, 5 columns)
+  → Pandas DataFrame
+  → TF-IDF vectorizer on cuisine text (stop_words='english')
+  → Cosine similarity matrix
+  → User selects restaurant name via web form
+  → Top 50 candidates by similarity
+  → Filter by cuisine, budget, rating
+  → Auto-relax cuisine filter if no results
+  → Deduplicate and sort by Mean Rating
+  → Top 10 recommendations displayed
 ```
 
-## Recommendation Pipeline
+## Routes
 
-1. **Lookup** - Match input restaurant name (case-insensitive exact match, partial fallback)
-2. **Vectorize** - TF-IDF vectorizer on `cuisines` column (stop_words='english')
-3. **Similarity** - Cosine similarity matrix between all restaurants
-4. **Filter** - Optional cuisine substring match, budget <= max, Mean Rating >= min
-5. **Rank** - Sort by Mean Rating descending, return top 10 unique
+| Route | Method | Description |
+|-------|--------|-------------|
+| `/` | GET | Home page with hero section |
+| `/recommend` | GET | Recommendation form with cuisine, budget, rating filters |
+| `/recommend` | POST | Process input, return results page |
+| `/analytics` | GET | Rating distribution histogram |
+
+## Components
+
+| File | Role |
+|------|------|
+| `Flask/app1.py` | Flask application: routes, TF-IDF engine, filtering logic |
+| `Flask/restaurant1.csv` | Dataset: 3,225 restaurants with name, rate, rating, cuisines, cost |
+| `Flask/requirements.txt` | Pinned dependencies (32 packages) |
+| `Flask/templates/` | Jinja2 templates (home, form, results, error) |
+| `Flask/static/` | Static assets (images) |
+| `Model/Final_Development_Phase.ipynb` | Model development notebook |
+| `Project Excecution Files/` | Development backup files |
+
+## Dataset Schema
+
+| Column | Description |
+|--------|-------------|
+| `name` | Restaurant name |
+| `rate` | Rating out of 5 (e.g., "4.1/5") |
+| `Mean Rating` | Calculated mean rating |
+| `cuisines` | Cuisine tags (comma-separated) |
+| `cost` | Cost for two people |
 
 ## Design Decisions
 
-| Decision | Choice | Rationale |
-|----------|--------|-----------|
-| Framework | Flask | Lightweight, no ORM, single-process app fits the use case |
-| Similarity approach | TF-IDF + cosine similarity | Simple, no training needed, works well with short text (cuisines) |
-| Dataset size | 3,225 rows | Fits in memory; TF-IDF matrix computed on every request (acceptable for this scale) |
-| Name matching | Exact + partial | Exact gives precision; partial provides fallback for typos |
-| UI style | Glassmorphism / Neumorphism | Modern look without heavy CSS framework dependencies |
-| Data format | CSV | Portable, no database setup required |
-
-## Integration Points
-
-- Dataset: `Flask/restaurant1.csv` (5 columns: name, rate, Mean Rating, cuisines, cost)
-- Templates: 4 Jinja2 templates in `Flask/templates/`
-- Static assets: `Flask/static/` (images for hero background)
+| Decision | Rationale |
+|----------|-----------|
+| Content-based filtering | No user rating data needed, works with restaurant attributes only |
+| TF-IDF on cuisine text | Simple, effective for text-based similarity |
+| Cosine similarity | Standard metric for text vector comparison |
+| Filters applied post-similarity | Users can narrow recommendations without recomputing |
+| Auto-relax empty filters | Prevents zero results when cuisine filter is too strict |
 
 ## Trade-offs
 
-- TF-IDF matrix recomputed per request: fine for 3k rows, would need caching or pre-computation at 50k+
-- Cuisine-only similarity ignores location, price range, and ambience data not present in the dataset
-- Single-server Flask (no uWSGI/gunicorn) limits concurrent users in production
+- No collaborative filtering — ignores user behavior patterns
+- Cold start: new restaurants with no cuisine data won't be found
+- Limited to cuisine-based similarity — no price, location, or ambiance matching
+- No persistent database — data reloads on each Flask restart
+- Similarity matrix recomputed per request (not cached)
+
+## File Organization
+
+```
+Restaurant-Recommendation-System/
+├── Flask/
+│   ├── app1.py
+│   ├── restaurant1.csv
+│   ├── requirements.txt
+│   ├── templates/
+│   └── static/
+├── Model/
+│   └── Final_Development_Phase.ipynb
+├── Project Excecution Files/
+│   └── ...
+├── index.html
+└── docs/
+    ├── ARCHITECTURE.md
+    ├── GETTING-STARTED.md
+    ├── DEVELOPMENT.md
+    ├── TESTING.md
+    └── CONFIGURATION.md
+```
