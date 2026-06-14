@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SpotMyMeal - Restaurant Recommendation System</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;background:#f4f6f9;color:#1a1a2e;line-height:1.6}
+.nav{background:#16213e;color:white;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.nav a{color:#8ab4f8;text-decoration:none;font-size:0.9em;margin-left:16px;transition:color .2s}
+.nav a:hover{color:white}
+.nav .site-title{font-weight:600;font-size:1em;color:white}
+.hero{background:linear-gradient(135deg,#16213e,#0f3460);color:white;padding:64px 24px 56px;text-align:center}
+.hero h1{font-size:2.8em;font-weight:700;margin-bottom:8px;letter-spacing:-0.5px}
+.hero .subtitle{font-size:1.2em;color:#8ab4f8;margin-bottom:8px}
+.hero p{color:#a8c8f8;font-size:1.05em;max-width:600px;margin:0 auto;line-height:1.5}
+.hero .demo-badge{display:inline-block;background:#e94560;padding:3px 14px;border-radius:20px;font-size:0.75em;font-weight:600;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.5px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:800px;margin:24px auto 0;padding:0 24px}
+@media(max-width:640px){.stats{grid-template-columns:1fr 1fr}}
+.stat{text-align:center;padding:20px 12px;background:rgba(255,255,255,0.08);border-radius:10px}
+.stat .num{font-size:2em;font-weight:700;color:white}
+.stat .label{font-size:0.8em;color:#8ab4f8;margin-top:2px}
+.container{max-width:1000px;margin:0 auto;padding:32px 20px}
+.card{background:white;border-radius:12px;padding:24px;margin-bottom:20px;box-shadow:0 1px 4px rgba(0,0,0,0.06)}
+.card h2{font-size:1.2em;color:#0f3460;margin-bottom:8px}
+.card p{color:#495057;font-size:0.92em}
+.card .demo-label{color:#e94560;font-size:0.75em;font-weight:600;margin-bottom:6px}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:20px 0}
+.feature{background:white;border-radius:12px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,0.06);text-align:center}
+.feature h3{font-size:1em;color:#0f3460;margin-bottom:4px}
+.feature p{font-size:0.85em;color:#6c757d}
+.feature .icon{font-size:2em;margin-bottom:8px}
+.tag{display:inline-block;background:#e9ecef;color:#495057;padding:3px 10px;border-radius:20px;font-size:0.78em;margin:2px 4px 2px 0}
+.card-footer{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:5px;background:#0f3460;color:white;padding:7px 16px;border-radius:6px;text-decoration:none;font-weight:500;font-size:0.85em;transition:all .2s}
+.btn:hover{background:#16213e}
+.btn-outline{background:transparent;color:#0f3460;border:2px solid #0f3460}
+.btn-outline:hover{background:#0f3460;color:white}
+footer{text-align:center;padding:24px;color:#6c757d;font-size:0.88em;border-top:1px solid #dee2e6}
+.section-title{font-size:1.4em;color:#16213e;margin-bottom:16px;margin-top:32px}
+.tech-list{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.flow{background:#f8f9fa;border-radius:8px;padding:16px;margin:16px 0;font-size:0.9em;color:#495057;line-height:1.8}
+.flow strong{color:#0f3460}
+@media(max-width:480px){.hero h1{font-size:1.8em}.container{padding:16px}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+<div class="site-title">SpotMyMeal - Demo Project</div>
+<div>
+<a href="https://github.com/harshvardhankulkarni/restaurant-recommendation-system">Repository</a>
+<a href="https://harshvardhankulkarni.github.io/restaurant-recommendation-system/">Home</a>
+</div>
+</nav>
+
+<section class="hero">
+<div class="demo-badge">Demo Project</div>
+<h1>SpotMyMeal</h1>
+<p class="subtitle">Restaurant Recommendation System</p>
+<p>Content-based recommendation engine using TF-IDF and cosine similarity. Enter a restaurant you love and discover similar places.</p>
+<div class="stats">
+<div class="stat"><div class="num">3,200+</div><div class="label">Restaurants</div></div>
+<div class="stat"><div class="num">50+</div><div class="label">Cuisine Types</div></div>
+<div class="stat"><div class="num">TF-IDF</div><div class="label">Similarity Engine</div></div>
+<div class="stat"><div class="num">Flask</div><div class="label">Web Framework</div></div>
+</div>
+</section>
+
+<div class="container">
+
+<div class="card">
+<div class="demo-label">Demo Project</div>
+<h2>About SpotMyMeal</h2>
+<p>SpotMyMeal is a Flask web application that recommends restaurants using content-based filtering. The system analyzes cuisine text with TF-IDF vectorization, computes cosine similarity between restaurants, and returns the top 10 most similar matches filtered by the user's preferences for cuisine type, budget, and minimum rating.</p>
+<div class="tech-list">
+<span class="tag">Python</span><span class="tag">Flask</span><span class="tag">Pandas</span><span class="tag">scikit-learn</span><span class="tag">TF-IDF</span><span class="tag">Cosine Similarity</span><span class="tag">Jinja2</span><span class="tag">HTML/CSS</span>
+</div>
+</div>
+
+<h3 class="section-title">Key Features</h3>
+<div class="grid-3">
+<div class="feature">
+<div class="icon">🔍</div>
+<h3>Name Search</h3>
+<p>Find a restaurant by exact or partial name match</p>
+</div>
+<div class="feature">
+<div class="icon">🧠</div>
+<h3>Smart Matching</h3>
+<p>TF-IDF + cosine similarity finds cuisine-aligned alternatives</p>
+</div>
+<div class="feature">
+<div class="icon">🎯</div>
+<h3>Flexible Filters</h3>
+<p>Filter by cuisine, budget, and minimum rating</p>
+</div>
+<div class="feature">
+<div class="icon">⭐</div>
+<h3>Top 10 Results</h3>
+<p>Sorted by rating - best matches first</p>
+</div>
+<div class="feature">
+<div class="icon">🎨</div>
+<h3>Glassmorphism UI</h3>
+<p>Modern neumorphism design with gradient accents</p>
+</div>
+<div class="feature">
+<div class="icon">📊</div>
+<h3>Analytics Route</h3>
+<p>Built-in rating distribution histogram</p>
+</div>
+</div>
+
+<h3 class="section-title">How It Works</h3>
+<div class="flow">
+<strong>1.</strong> User enters a restaurant name and optional filters<br>
+<strong>2.</strong> App finds matching restaurant (exact match, partial name fallback)<br>
+<strong>3.</strong> TF-IDF vectorizer converts cuisine text to numerical vectors<br>
+<strong>4.</strong> Cosine similarity identifies the 50 most cuisine-similar restaurants<br>
+<strong>5.</strong> Filters applied: cuisine type, max budget, minimum rating<br>
+<strong>6.</strong> Top 10 results sorted by Mean Rating, duplicates removed
+</div>
+
+<h3 class="section-title">Dataset</h3>
+<div class="card">
+<h2>Restaurant CSV</h2>
+<p>3,225 restaurants with 5 attributes: name, aggregate rating, mean rating, cuisines (comma-separated), and cost for two (INR). Rating range: 1.0-5.0. Cost range: 1-950 INR. Cuisines include North Indian, Chinese, South Indian, Mughlai, Italian, Thai, Fast Food, and more.</p>
+</div>
+
+<div class="card-footer">
+<a class="btn" href="https://github.com/harshvardhankulkarni/restaurant-recommendation-system">GitHub Repository</a>
+<a class="btn btn-outline" href="https://github.com/harshvardhankulkarni/restaurant-recommendation-system/tree/main/docs">Documentation</a>
+</div>
+
+<footer>
+<p>Harshvardhan Kulkarni &middot; Pune, India</p>
+<p>Demo Project &middot; <a href="https://github.com/harshvardhankulkarni">GitHub Profile</a></p>
+</footer>
+
+</div>
+</body>
+</html>
